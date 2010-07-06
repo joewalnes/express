@@ -5,6 +5,18 @@ describe 'Express'
   end
   
   describe 'Request'
+  
+    describe '#respond()'
+      describe 'when method is HEAD'
+        it 'should NOT return a body'
+          get('/user', function() {
+            return 'Say what!?'
+          })
+          head('/user').body.should.eql null
+        end
+      end
+    end
+  
     describe '#status()'
       it 'should set the response status'
         get('/user', function(){ this.status(500) })
@@ -26,13 +38,25 @@ describe 'Express'
     end
 
     describe '#header()'
+    
+      describe 'when a HTTP HEAD request is made'
+        describe 'when given a field name and value'
+          it 'should set the header'
+            get('/user', function(){
+              this.header('x-foo', 'bar')
+            })
+            head('/user').headers.should.have_property 'x-foo', 'bar'
+          end
+        end
+      end
+      
       describe 'when given a field name and value'
         it 'should set the header'
           get('/user', function(){
             this.header('x-foo', 'bar')
           })
           get('/user').headers.should.have_property 'x-foo', 'bar'
-        end  
+        end
       end
 
       describe 'when given a field name'
