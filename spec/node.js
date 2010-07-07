@@ -16,6 +16,7 @@ specs = {
     'routing',
     'utils',
     'request',
+    'request.contentTypeCallbacks',
     'mime',
     'plugins',
     'plugins.cache',
